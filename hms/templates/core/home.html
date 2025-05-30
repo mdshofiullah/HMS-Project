@@ -1,0 +1,49 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="hero-section bg-primary text-white text-center py-5">
+    <h1 class="display-4">Hospital Management System</h1>
+    <p class="lead">Comprehensive healthcare management solution</p>
+    
+    <div class="mt-4">
+        <a href="{% url 'login' %}?next={% url 'core:dashboard' %}" class="btn btn-light btn-lg me-2">
+            <i class="fas fa-sign-in-alt me-2"></i>Login
+        </a>
+        <a href="{% url 'users:register' %}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-user-plus me-2"></i>Register
+        </a>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
+                <h4>Doctor Management</h4>
+                <p>Manage doctor schedules, appointments, and patient records</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-vial fa-3x text-success mb-3"></i>
+                <h4>Lab Testing</h4>
+                <p>Track lab tests and results with our advanced system</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <i class="fas fa-home fa-3x text-info mb-3"></i>
+                <h4>Home Collection</h4>
+                <p>Schedule sample collection from patient's home</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

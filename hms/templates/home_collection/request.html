@@ -1,0 +1,88 @@
+{% extends "core/base.html" %}
+
+{% block title %}Home Collection Request{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0"><i class="fas fa-home me-2"></i>Home Sample Collection Request</h4>
+            </div>
+            <div class="card-body">
+                <p class="lead">Schedule a sample collection from your home at your convenience</p>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-primary h-100">
+                            <div class="card-body text-center">
+                                <div class="icon-circle bg-primary text-white mb-3 mx-auto">
+                                    <i class="fas fa-vial fa-2x"></i>
+                                </div>
+                                <h5>Standard Tests</h5>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Blood Tests</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Urine Tests</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Basic Health Checkup</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card border-success h-100">
+                            <div class="card-body text-center">
+                                <div class="icon-circle bg-success text-white mb-3 mx-auto">
+                                    <i class="fas fa-microscope fa-2x"></i>
+                                </div>
+                                <h5>Specialized Tests</h5>
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check text-success me-2"></i>Hormone Tests</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Genetic Testing</li>
+                                    <li><i class="fas fa-check text-success me-2"></i>Advanced Diagnostics</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <form method="post" class="mt-4">
+                    {% csrf_token %}
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label class="form-label">Preferred Date</label>
+                            {{ form.preferred_date }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Preferred Time</label>
+                            {{ form.preferred_time }}
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Collection Address</label>
+                        {{ form.collection_address }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Requested Tests</label>
+                        {{ form.requested_tests }}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">Special Instructions</label>
+                        {{ form.special_instructions }}
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-paper-plane me-2"></i>Submit Request
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

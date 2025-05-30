@@ -1,0 +1,59 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h2 class="mb-0">Reception Dashboard</h2>
+    </div>
+    <div class="card-body">
+        <p class="lead">Welcome, {{ user.get_full_name }}!</p>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0">Today's Summary</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Appointments
+                                <span class="badge bg-primary rounded-pill">15</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                New Patients
+                                <span class="badge bg-success rounded-pill">5</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Pending Tasks
+                                <span class="badge bg-warning rounded-pill">3</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2">
+                            <a href="{% url 'reception:create_appointment' %}" class="btn btn-light border mb-2">
+                                <i class="fas fa-plus-circle me-2"></i>Create Appointment
+                            </a>
+                            <a href="{% url 'reception:patient_list' %}" class="btn btn-light border mb-2">
+                                <i class="fas fa-users me-2"></i>View Patients
+                            </a>
+                            <a href="{% url 'reception:appointment_list' %}" class="btn btn-light border">
+                                <i class="fas fa-calendar-alt me-2"></i>View Appointments
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

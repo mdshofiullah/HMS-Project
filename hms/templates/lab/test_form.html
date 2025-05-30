@@ -1,0 +1,35 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header bg-primary text-white">
+        <h4 class="mb-0">Create New Lab Test</h4>
+    </div>
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label class="form-label">Test Type</label>
+                {{ form.test_type }}
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label class="form-label">Patient</label>
+                    {{ form.patient }}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Doctor</label>
+                    {{ form.doctor }}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Notes</label>
+                {{ form.notes }}
+            </div>
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Create Test</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

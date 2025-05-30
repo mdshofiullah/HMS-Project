@@ -1,0 +1,46 @@
+{% extends "core/base.html" %}
+
+{% block content %}
+<div class="card mb-4">
+    <div class="card-header bg-info text-white">
+        <h4 class="mb-0">Test Details</h4>
+    </div>
+    <div class="card-body">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Test ID:</strong> {{ test.id }}
+            </div>
+            <div class="col-md-6">
+                <strong>Status:</strong> 
+                <span class="badge bg-{% if test.status == 'completed' %}success{% elif test.status == 'in_progress' %}warning{% else %}info{% endif %}">
+                    {{ test.get_status_display }}
+                </span>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Test Type:</strong> {{ test.get_test_type_display }}
+            </div>
+            <div class="col-md-6">
+                <strong>Test Date:</strong> {{ test.test_date|date:"M d, Y H:i" }}
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <strong>Patient:</strong> {{ test.patient.get_full_name }}
+            </div>
+            <div class="col-md-6">
+                <strong>Doctor:</strong> Dr. {{ test.doctor.get_full_name }}
+            </div>
+        </div>
+        <div class="mb-3">
+            <strong>Notes:</strong>
+            <p>{{ test.notes|default:"No notes provided" }}</p>
+        </div>
+    </div>
+</div>
+
+<a href="{% url 'lab:test_list' %}" class="btn btn-secondary">
+    <i class="fas fa-arrow-left me-2"></i>Back to Test List
+</a>
+{% endblock %}

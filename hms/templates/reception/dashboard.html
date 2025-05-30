@@ -1,0 +1,141 @@
+{% extends "core/base.html" %}
+
+{% block title %}Reception Dashboard{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-md-8">
+        <h2><i class="fas fa-headset me-2"></i>Reception Dashboard</h2>
+        <p class="lead">Welcome, {{ user.get_full_name }}</p>
+    </div>
+    <div class="col-md-4 text-end">
+        <a href="{% url 'reception:create_appointment' %}" class="btn btn-success me-2">
+            <i class="fas fa-plus-circle me-2"></i>New Appointment
+        </a>
+        <a href="{% url 'reception:patient_list' %}" class="btn btn-primary">
+            <i class="fas fa-users me-2"></i>Patient List
+        </a>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-calendar-day me-2"></i>Today's Appointments</h5>
+            </div>
+            <div class="card-body">
+                {% if today_appointments %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Time</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Purpose</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appt in today_appointments %}
+                                    <tr>
+                                        <td>{{ appt.date_time|time }}</td>
+                                        <td>{{ appt.patient.get_full_name }}</td>
+                                        <td>Dr. {{ appt.doctor.get_full_name }}</td>
+                                        <td>{{ appt.purpose|truncatechars:30 }}</td>
+                                        <td>
+                                            <span class="badge bg-{% if appt.status == 'scheduled' %}info{% elif appt.status == 'completed' %}success{% else %}warning{% endif %}">
+                                                {{ appt.get_status_display }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'reception:appointment_detail' appt.id %}" class="btn btn-sm btn-outline-primary">
+                                                <i class="fas fa-eye"></i> View
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i>No appointments scheduled for today.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i>New Patients</h5>
+            </div>
+            <div class="card-body">
+                {% if new_patients %}
+                    <div class="list-group">
+                        {% for patient in new_patients %}
+                            <a href="{% url 'reception:patient_detail' patient.id %}" class="list-group-item list-group-item-action">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h6 class="mb-1">{{ patient.get_full_name }}</h6>
+                                    <small>{{ patient.date_joined|timesince }} ago</small>
+                                </div>
+                                <small>@{{ patient.username }}</small>
+                            </a>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    <div class="alert alert-info mb-0">
+                        <i class="fas fa-info-circle me-2"></i>No new patients today.
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-tasks me-2"></i>Quick Stats</h5>
+            </div>
+            <div class="card-body">
+                <div class="row text-center">
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h2 class="text-primary">12</h2>
+                                <p class="mb-0">Today's Appointments</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h2 class="text-success">8</h2>
+                                <p class="mb-0">New Patients</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h2 class="text-info">3</h2>
+                                <p class="mb-0">Pending Reports</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h2 class="text-warning">5</h2>
+                                <p class="mb-0">Home Collections</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

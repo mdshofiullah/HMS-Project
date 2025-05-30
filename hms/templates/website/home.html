@@ -1,0 +1,189 @@
+{% extends "core/base.html" %}
+
+{% block title %}Hospital HMS - Home{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: url('{% static "img/hospital-hero.jpg" %}') no-repeat center center;
+        background-size: cover;
+        position: relative;
+        padding: 5rem 0;
+        border-radius: 15px;
+        margin-bottom: 3rem;
+        overflow: hidden;
+    }
+    
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(13, 110, 253, 0.7);
+    }
+    
+    .hero-content {
+        position: relative;
+        z-index: 1;
+        color: white;
+    }
+    
+    .service-card {
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .service-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container hero-content text-center">
+        <h1 class="display-4 fw-bold mb-4">Your Health is Our Priority</h1>
+        <p class="lead mb-5">Advanced medical care with compassion and expertise</p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="{% url 'website:book_appointment' %}" class="btn btn-light btn-lg px-4 py-3">
+                <i class="fas fa-calendar-check me-2"></i>Book Appointment
+            </a>
+            <a href="{% url 'website:doctor_list' %}" class="btn btn-outline-light btn-lg px-4 py-3">
+                <i class="fas fa-user-md me-2"></i>Find a Doctor
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="mb-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto text-center">
+                <h2 class="mb-3">Our Medical Services</h2>
+                <p class="lead">Comprehensive healthcare services for all your medical needs</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-circle bg-primary text-white mb-4 mx-auto">
+                            <i class="fas fa-heartbeat fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Cardiology</h4>
+                        <p class="card-text">Advanced heart care with state-of-the-art diagnostic and treatment facilities.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-circle bg-success text-white mb-4 mx-auto">
+                            <i class="fas fa-brain fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Neurology</h4>
+                        <p class="card-text">Expert care for disorders of the nervous system with cutting-edge technology.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card service-card h-100">
+                    <div class="card-body text-center p-4">
+                        <div class="icon-circle bg-info text-white mb-4 mx-auto">
+                            <i class="fas fa-baby fa-2x"></i>
+                        </div>
+                        <h4 class="card-title">Pediatrics</h4>
+                        <p class="card-text">Compassionate care for infants, children and adolescents.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 mb-4 mb-md-0">
+                <h2 class="mb-4">Why Choose Our Hospital?</h2>
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0 text-primary me-3">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5>Experienced Specialists</h5>
+                        <p>Our team of doctors includes highly qualified specialists with years of experience.</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0 text-primary me-3">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5>Advanced Technology</h5>
+                        <p>We use the latest medical equipment for accurate diagnosis and effective treatment.</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-3">
+                    <div class="flex-shrink-0 text-primary me-3">
+                        <i class="fas fa-check-circle fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5>Patient-Centered Care</h5>
+                        <p>Your comfort and well-being are at the heart of everything we do.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card border-0 shadow-lg">
+                    <img src="{% static 'img/hospital-facility.jpg' %}" class="card-img-top rounded" alt="Hospital Facility">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-8 mx-auto text-center">
+                <h2 class="mb-3">Meet Our Specialists</h2>
+                <p class="lead">Our team of experienced doctors is dedicated to your health</p>
+            </div>
+        </div>
+        
+        <div class="row g-4">
+            {% for doctor in doctors %}
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-img-top bg-light text-center p-4">
+                        <i class="fas fa-user-md fa-4x text-primary"></i>
+                    </div>
+                    <div class="card-body text-center">
+                        <h5 class="card-title mb-1">Dr. {{ doctor.get_full_name }}</h5>
+                        <p class="text-muted mb-2">{{ doctor.specialization }}</p>
+                        <div class="d-flex justify-content-center gap-2">
+                            <a href="#" class="btn btn-sm btn-outline-primary">Profile</a>
+                            <a href="{% url 'website:book_appointment' doctor.id %}" class="btn btn-sm btn-primary">Book</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'website:doctor_list' %}" class="btn btn-outline-primary">
+                <i class="fas fa-user-md me-2"></i>View All Doctors
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}
