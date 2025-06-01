@@ -1,49 +1,342 @@
 {% extends "core/base.html" %}
+{% load static %}
+
+{% block title %}Dashboard - Hospital HMS{% endblock %}
 
 {% block content %}
-<div class="hero-section bg-primary text-white text-center py-5">
-    <h1 class="display-4">Hospital Management System</h1>
-    <p class="lead">Comprehensive healthcare management solution</p>
-    
-    <div class="mt-4">
-        <a href="{% url 'login' %}?next={% url 'core:dashboard' %}" class="btn btn-light btn-lg me-2">
-            <i class="fas fa-sign-in-alt me-2"></i>Login
-        </a>
-        <a href="{% url 'users:register' %}" class="btn btn-outline-light btn-lg">
-            <i class="fas fa-user-plus me-2"></i>Register
-        </a>
+<!-- Page Heading -->
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+    <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+        <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+    </a>
+</div>
+
+<!-- Role-Based Welcome Message -->
+<div class="row mb-4">
+    <div class="col-xl-12">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Welcome, {% firstof request.user.get_full_name request.user.username %}!
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                            {{ request.user.get_role_display }} Dashboard
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-md fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
-<div class="row mt-4">
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-user-md fa-3x text-primary mb-3"></i>
-                <h4>Doctor Management</h4>
-                <p>Manage doctor schedules, appointments, and patient records</p>
+<!-- Stats Row -->
+<div class="row">
+    <!-- Appointments Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Today's Appointments
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-calendar-check fa-2x text-gray-300"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-vial fa-3x text-success mb-3"></i>
-                <h4>Lab Testing</h4>
-                <p>Track lab tests and results with our advanced system</p>
+
+    <!-- Patients Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                            Total Patients
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">1,248</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-user-injured fa-2x text-gray-300"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <div class="col-md-4 mb-4">
-        <div class="card h-100">
-            <div class="card-body text-center">
-                <i class="fas fa-home fa-3x text-info mb-3"></i>
-                <h4>Home Collection</h4>
-                <p>Schedule sample collection from patient's home</p>
+
+    <!-- Lab Tests Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
+                            Pending Lab Tests
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-vial fa-2x text-gray-300"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Revenue Card -->
+    <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+            <div class="card-body">
+                <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                            Monthly Revenue
+                        </div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">Tk-215,000</div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="fas fa-solid fa-bangladeshi-taka-sign fa-2x text-gray-300"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Charts Row -->
+<div class="row">
+    <!-- Appointments Chart -->
+    <div class="col-xl-8 col-lg-7">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Appointments Overview</h6>
+            </div>
+            <div class="card-body">
+                <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tasks Card -->
+    <div class="col-xl-4 col-lg-5">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Tasks</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <div class="small text-gray-500">Approve Lab Reports
+                        <span class="float-end">50%</span>
+                    </div>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="small text-gray-500">Review Patient Records
+                        <span class="float-end">30%</span>
+                    </div>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 30%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="small text-gray-500">Update Doctor Schedules
+                        <span class="float-end">75%</span>
+                    </div>
+                    <div class="progress mb-4">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 75%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="small text-gray-500">Process Payments
+                        <span class="float-end">90%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 90%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Recent Activity Row -->
+<div class="row">
+    <!-- Recent Appointments -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">Recent Appointments</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>Patient</th>
+                                <th>Doctor</th>
+                                <th>Date & Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>Dr. Smith</td>
+                                <td>2023-06-15 10:00</td>
+                                <td><span class="badge bg-success">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>Dr. Johnson</td>
+                                <td>2023-06-15 11:30</td>
+                                <td><span class="badge bg-warning">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>Robert Brown</td>
+                                <td>Dr. Williams</td>
+                                <td>2023-06-15 14:00</td>
+                                <td><span class="badge bg-primary">Scheduled</span></td>
+                            </tr>
+                            <tr>
+                                <td>Emily Davis</td>
+                                <td>Dr. Anderson</td>
+                                <td>2023-06-16 09:00</td>
+                                <td><span class="badge bg-primary">Scheduled</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- System Notifications -->
+    <div class="col-lg-6 mb-4">
+        <div class="card shadow mb-4">
+            <div class="card-header py-3">
+                <h6 class="m-0 font-weight-bold text-primary">System Notifications</h6>
+            </div>
+            <div class="card-body">
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">System Update Available</h6>
+                            <small>2 hours ago</small>
+                        </div>
+                        <p class="mb-1">New version 2.3.1 is ready to install</p>
+                        <small>Software Updates</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">New Patients Registered</h6>
+                            <small>Today</small>
+                        </div>
+                        <p class="mb-1">5 new patients registered in the system</p>
+                        <small>Patient Management</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h6 class="mb-1">Lab Results Ready</h6>
+                            <small>Yesterday</small>
+                        </div>
+                        <p class="mb-1">12 lab test results are ready for review</p>
+                        <small>Laboratory</small>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Area Chart Example
+var ctx = document.getElementById("myAreaChart");
+var myLineChart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+    datasets: [{
+      label: "Appointments",
+      lineTension: 0.3,
+      backgroundColor: "rgba(78, 115, 223, 0.05)",
+      borderColor: "rgba(78, 115, 223, 1)",
+      pointRadius: 3,
+      pointBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointBorderColor: "rgba(78, 115, 223, 1)",
+      pointHoverRadius: 3,
+      pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+      pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+      pointHitRadius: 10,
+      pointBorderWidth: 2,
+      data: [12, 15, 18, 17, 22, 10, 8],
+    }],
+  },
+  options: {
+    maintainAspectRatio: false,
+    layout: {
+      padding: {
+        left: 10,
+        right: 25,
+        top: 25,
+        bottom: 0
+      }
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+          drawBorder: false
+        }
+      },
+      y: {
+        ticks: {
+          maxTicksLimit: 5,
+          padding: 10,
+        },
+        grid: {
+          color: "rgb(234, 236, 244)",
+          drawBorder: false,
+          borderDash: [2],
+          zeroLineBorderDash: [2]
+        }
+      },
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      tooltip: {
+        backgroundColor: "rgb(255,255,255)",
+        bodyColor: "#858796",
+        titleMarginBottom: 10,
+        titleColor: '#6e707e',
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        padding: 15,
+        displayColors: false,
+        intersect: false,
+        mode: 'index',
+        caretPadding: 10,
+      }
+    }
+  }
+});
+</script>
 {% endblock %}
